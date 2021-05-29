@@ -46,7 +46,7 @@ public class TestCarte {
 				System.out.println("Entrez numéro colonne expéditeuse : ");
 				indiceExp= scan.nextInt()-1;
 				System.out.println("Entrez numéro colonne receveuse : ");
-				
+				indiceRecev= scan.nextInt()-1;
 
 			}
 			else if (menu.getChoix()==7)
