@@ -111,12 +111,12 @@ public class TableauKlondike {
 			throw new IllegalArgumentException();
 	}
 	//retourne vrai si la derniere carte de col exp peut etre pose sur col recev
-	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev, int nbCarte) {
+	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev, int indiceCarte) {
 		//si paquet receveur vide renvoie vrai si la carte = Roi
-		if (recev.isEmpty() && exp.getCarteIndice(nbCarte).getValeur().equals(Valeur.roi))
+		if (recev.isEmpty() && exp.getCarteIndice(indiceCarte).getValeur().equals(Valeur.roi))
 			return true;
 		//si paquet receveur non vide retourne vrai si carte de exp = precede de recev et teinte alterne
-		else if (!recev.isEmpty() && recev.getTop().precedeDiffTeinte(exp.getCarteIndice(nbCarte)))
+		else if (!recev.isEmpty() && recev.getTop().precedeDiffTeinte(exp.getCarteIndice(indiceCarte)))
 			return true;
 		//si non retourne faux
 		return false;
@@ -124,12 +124,17 @@ public class TableauKlondike {
 
 	//retire et ajoute n cartes d'une colonne vers une autre colonne
 	public void deplaceNcarteColCol(int indiceExp, int indiceRecev, int nbCarte, InterfaceKlondike itp) {
-		CarteAffichable [] tab= new CarteAffichable[nbCarte+1];
-		for (int i=nbCarte; i<0; i--) {
-			if (deplacePlusieurs(tableauVisible[indiceExp], tableauVisible[indiceRecev], nbCarte)) {
+		Carte [] tab= new Carte[nbCarte+1];
+		int j=0;
+		for (int i=nbCarte; i>=0; i--) {
+			if (deplacePlusieurs(tableauVisible[indiceExp], tableauVisible[indiceRecev], i)) {
 				//initialise tableau de carte
-				tab[i]= tableauVisible[indiceExp].getCarteIndice(i);
+				tab[j]= tableauVisible[indiceExp].getCarteIndice(i);
 				tableauVisible[indiceRecev].ajoutCarte(tableauVisible[indiceExp].removeCarteInd(i));
+				j++;
+			}
+			else {
+				throw new IllegalArgumentException();
 			}
 		}
 		itp.ajouterLesCartes(tab, convertIndToEmp(indiceRecev));
@@ -148,7 +153,6 @@ public class TableauKlondike {
 		}
 		else 
 			throw new IllegalArgumentException();
-
 	}
 	
 }
