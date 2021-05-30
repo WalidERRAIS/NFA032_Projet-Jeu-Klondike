@@ -9,7 +9,7 @@ public class TestCarte {
 		MenuKlondike menu= new MenuKlondike();
 		InterfaceKlondike itp = new InterfaceKlondike();
 		PaquetDistributeur p = new PaquetDistributeur();
-//		p.melangePaquet();
+		p.melangePaquet();
 		TableauKlondike tableau= new TableauKlondike(p, itp);
 		Fondation fondation = new Fondation(); 
 		Pioche pioche = new Pioche(p, itp);
@@ -35,7 +35,7 @@ public class TestCarte {
 			else if (menu.getChoix()==4) {
 				int indiceExp;
 				String nomPieux;
-				System.out.println("Entrez numero colonne expediteuse : ");
+				System.out.println("Entrez numero colonne expeditrice : ");
 				indiceExp= scan.nextInt()-1;
 				System.out.println("Entrez nom pieux receveur : ");
 				nomPieux = scan.next();
@@ -43,7 +43,7 @@ public class TestCarte {
 			}
 			else if (menu.getChoix()==5) {
 				int indiceExp, indiceRecev;
-				System.out.println("Entrez numero colonne expediteuse : ");
+				System.out.println("Entrez numero colonne expeditrice : ");
 				indiceExp= scan.nextInt()-1;
 				System.out.println("Entrez numero colonne receveuse : ");
 				indiceRecev= scan.nextInt()-1;
@@ -51,13 +51,13 @@ public class TestCarte {
 			}
 			else if (menu.getChoix()==6) {
 				int indiceExp, indiceRecev, nbCarte;
-				System.out.println("Entrez numero colonne expediteuse : ");
+				System.out.println("Entrez numero colonne expeditrice : ");
 				indiceExp= scan.nextInt()-1;
+				System.out.println("Entrez numero colonne receveuse : ");
+				indiceRecev= scan.nextInt()-1;
 				System.out.println("Entrez le nombre de cartes a deplacer : ");
 				//faire moins 1 pour tomber sur le bon indice de la nième carte
 				nbCarte= scan.nextInt()-1;
-				System.out.println("Entrez numero colonne receveuse : ");
-				indiceRecev= scan.nextInt()-1;
 				tableau.deplaceNcarteColCol(indiceExp, indiceRecev, nbCarte, itp);
 			}
 			else if (menu.getChoix()==7)
