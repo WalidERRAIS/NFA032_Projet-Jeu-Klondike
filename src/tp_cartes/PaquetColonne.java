@@ -28,22 +28,22 @@ public class PaquetColonne extends Paquet {
 			throw new IllegalArgumentException();
 	}
 	//retourne vrai si la derniere carte de col exp peut etre pose sur col recev
-	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev) {
+	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev, int nbCarte) {
 		//si paquet receveur vide renvoie vrai si la carte = Roi
 		if (recev.isEmpty() && exp.getLastCarte().getValeur().equals(Valeur.roi))
 			return true;
 		//si paquet receveur non vide retourne vrai si carte de exp = precede de recev et teinte alterne
-		else if (!recev.isEmpty() && recev.getTop().precedeDiffTeinte(exp.getLastCarte()))
+		else if (!recev.isEmpty() && recev.getTop().precedeDiffTeinte(exp.getCarteIndice(nbCarte)))
 			return true;
 		//si non retourne faux
 		return false;
 	}
 
 	//retire et ajoute n cartes d'une colonne vers une autre colonne
-	public void deplaceNcarteColCol(PaquetColonne exp, PaquetColonne recev, int n) {
-		for (int i=0; i<n; i++) {
-			if (deplacePlusieurs(exp, recev))
-				recev.ajoutCarte(exp.removeLastCarte());
+	public void deplaceNcarteColCol(PaquetColonne exp, PaquetColonne recev, int nbCarte) {
+		for (int i=nbCarte; i<0; i--) {
+			if (deplacePlusieurs(exp, recev, nbCarte))
+				recev.ajoutCarte(exp.removeCarteInd(i));
 			else
 				throw new IllegalArgumentException();
 		}

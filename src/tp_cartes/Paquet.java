@@ -60,6 +60,13 @@ public class Paquet {
 		else
 			throw new IllegalArgumentException();
 	}
+	//retire carte a indice i
+	public Carte removeCarteInd(int i) {
+		if (!this.paquet.isEmpty())  
+			return this.paquet.remove(i);
+		else
+			throw new IllegalArgumentException();
+	}
 	//retourne vrai si la carte de paquet exp peut etre pose sur paquet recev
 	//retourne vrai pour paquet sans ordre
 	public boolean deplace(Paquet exp, Paquet recev) {

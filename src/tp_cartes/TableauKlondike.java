@@ -1,7 +1,6 @@
 package tp_cartes;
 
-import java.util.ArrayList;
-
+import interfaceGraphique.CarteAffichable;
 import interfaceGraphique.InterfaceKlondike;
 
 public class TableauKlondike {
@@ -18,9 +17,9 @@ public class TableauKlondike {
 			//pas d'affichage à l'emplacement 7 pour paquet cachee indice 0 car paquet vide
 			if (!tableauCache[i].isEmpty()) {
 				//ajoute autant de carte à l'affichage que de cartes dans paquet cache
-				for (int k=0; k<tableauCache[i].getNombreCartePaquet(); k++) {
+				for (int k=0; k<tableauCache[i].getNombreCartePaquet(); k++) 
 					itp.ajouterUneCarte(tableauCache[i].getCarteIndice(k), j);
-				}
+				
 			}
 			//initialise tableau paquets cartes cachees
 			//et affichage de la carte selon visibilite à l'emplacement interface graphique
@@ -57,8 +56,23 @@ public class TableauKlondike {
 	//deplace carte du haut de paquet exp en haut du paquet recev 
 	public void deplaceColCol(int indiceExp, int indiceRecev, InterfaceKlondike itp) {
 		if (deplace(tableauVisible[indiceExp], tableauVisible[indiceRecev])) {
-			tableauVisible[indiceRecev].ajoutCarte(tableauVisible[indiceExp].getTop());
+			tableauVisible[indiceRecev].ajoutCarte(tableauVisible[indiceExp].removeTop());
 			itp.ajouterUneCarte(tableauVisible[indiceRecev].getTop(), (convertIndToEmp(indiceRecev)));
+			
+			//deux paquets colonnes vides
+			if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty())
+				itp.vider(convertIndToEmp(indiceExp));
+			//paquet visible vide et paquet cache contient carte
+			else if (tableauVisible[indiceExp].isEmpty() && !tableauCache[indiceExp].isEmpty()) {
+				tableauVisible[indiceExp].ajoutCarteVisible((tableauCache[indiceExp].removeTop()));
+				tableauVisible[indiceExp].getTop().rendVisible();
+				itp.retirerDesCartes(2, convertIndToEmp(indiceExp));
+				itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
+
+			}
+			else if (!tableauVisible[indiceExp].isEmpty()) 
+				itp.retirerDesCartes(1, convertIndToEmp(indiceExp));
+			
 		}
 		else
 			throw new IllegalArgumentException();
@@ -80,9 +94,8 @@ public class TableauKlondike {
 			recev.ajoutCarte(tableauVisible[indiceExp].removeTop());
 			itp.ajouterUneCarte(recev.getTop(), idEmpPieux);
 			//deux paquets colonnes vides
-			if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty()) {
+			if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty()) 
 				itp.vider(convertIndToEmp(indiceExp));
-			}
 			//paquet visible vide et paquet cache contient carte
 			else if (tableauVisible[indiceExp].isEmpty() && !tableauCache[indiceExp].isEmpty()) {
 				tableauVisible[indiceExp].ajoutCarteVisible((tableauCache[indiceExp].removeTop()));
@@ -90,12 +103,52 @@ public class TableauKlondike {
 				itp.retirerDesCartes(2, convertIndToEmp(indiceExp));
 				itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
 			}
-			else if (!tableauVisible[indiceExp].isEmpty()) {
+			else if (!tableauVisible[indiceExp].isEmpty()) 
 				itp.retirerDesCartes(1, convertIndToEmp(indiceExp));
-			}
+			
 		}
 		else
 			throw new IllegalArgumentException();
+	}
+	//retourne vrai si la derniere carte de col exp peut etre pose sur col recev
+	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev, int nbCarte) {
+		//si paquet receveur vide renvoie vrai si la carte = Roi
+		if (recev.isEmpty() && exp.getCarteIndice(nbCarte).getValeur().equals(Valeur.roi))
+			return true;
+		//si paquet receveur non vide retourne vrai si carte de exp = precede de recev et teinte alterne
+		else if (!recev.isEmpty() && recev.getTop().precedeDiffTeinte(exp.getCarteIndice(nbCarte)))
+			return true;
+		//si non retourne faux
+		return false;
+	}
+
+	//retire et ajoute n cartes d'une colonne vers une autre colonne
+	public void deplaceNcarteColCol(int indiceExp, int indiceRecev, int nbCarte, InterfaceKlondike itp) {
+		CarteAffichable [] tab= new CarteAffichable[nbCarte+1];
+		for (int i=nbCarte; i<0; i--) {
+			if (deplacePlusieurs(tableauVisible[indiceExp], tableauVisible[indiceRecev], nbCarte)) {
+				//initialise tableau de carte
+				tab[i]= tableauVisible[indiceExp].getCarteIndice(i);
+				tableauVisible[indiceRecev].ajoutCarte(tableauVisible[indiceExp].removeCarteInd(i));
+			}
+		}
+		itp.ajouterLesCartes(tab, convertIndToEmp(indiceRecev));
+		//deux paquets colonnes vides
+		if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty())
+			itp.vider(convertIndToEmp(indiceExp));
+		//paquet visible vide et paquet cache contient carte
+		else if (tableauVisible[indiceExp].isEmpty() && !tableauCache[indiceExp].isEmpty()) {
+			tableauVisible[indiceExp].ajoutCarteVisible((tableauCache[indiceExp].removeTop()));
+			tableauVisible[indiceExp].getTop().rendVisible();
+			itp.retirerDesCartes(nbCarte+1, convertIndToEmp(indiceExp));
+			itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
+		}
+		else if (!tableauVisible[indiceExp].isEmpty()) {
+			itp.retirerDesCartes(nbCarte+1, convertIndToEmp(indiceExp));
+		}
+		else 
+			throw new IllegalArgumentException();
+
 	}
 	
 }
