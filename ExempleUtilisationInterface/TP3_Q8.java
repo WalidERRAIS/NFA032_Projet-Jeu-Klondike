@@ -1,6 +1,7 @@
 package ExempleUtilisationInterface;
 import java.util.Scanner;
 
+import gestionError.DeplacementImpossibleException;
 import interfaceGraphique.*;
 import tp_cartes.Carte;
 import tp_cartes.Paquet;
@@ -8,7 +9,7 @@ import tp_cartes.PaquetColonne;
 import tp_cartes.PaquetDistributeur;
 
 public class TP3_Q8 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws DeplacementImpossibleException {
 		Scanner scan = new Scanner(System.in);
 		InterfaceKlondike itp = new InterfaceKlondike();
 		PaquetDistributeur p= new PaquetDistributeur();

@@ -1,5 +1,7 @@
 package tp_cartes;
 
+import gestionError.*;
+
 public class Fondation {
 	private PaquetPieux[] fondation= new PaquetPieux[4];
 	public Fondation() {
@@ -8,7 +10,7 @@ public class Fondation {
 		}
 	}
 	//convertit nom paquet pieux recev en emplacement interface graphique
-	public int convertNomToEmp(String nomPieux) {
+	public int convertNomToEmp(String nomPieux) throws SaisiIncorrectException{
 		if (nomPieux.equalsIgnoreCase("A"))
 			return 3;
 		else if (nomPieux.equalsIgnoreCase("B"))
@@ -18,10 +20,10 @@ public class Fondation {
 		else if (nomPieux.equalsIgnoreCase("D"))
 			return 6;
 		else 
-			throw new IllegalArgumentException();
+			throw new SaisiIncorrectException();
 	}
 	//convertit nom paquet pieux recev en indice pour trouver paquet dans tableau fondation
-	public int convertNomToInd(String nomPieux) {
+	public int convertNomToInd(String nomPieux) throws SaisiIncorrectException{
 		if (nomPieux.equalsIgnoreCase("A"))
 			return 0;
 		else if (nomPieux.equalsIgnoreCase("B"))
@@ -31,7 +33,7 @@ public class Fondation {
 		else if (nomPieux.equalsIgnoreCase("D"))
 			return 3;
 		else
-			throw new IllegalArgumentException();
+			throw new SaisiIncorrectException();
 	}
 	public PaquetPieux getPaquetPieux(int indicePaquetPieux) {
 		return (fondation[indicePaquetPieux]);
