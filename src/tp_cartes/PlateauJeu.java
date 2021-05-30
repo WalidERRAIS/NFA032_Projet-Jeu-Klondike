@@ -42,8 +42,8 @@ public class PlateauJeu {
 			//choix 2
 			else if (menu.getChoix()==2) {
 				int indiceRecev;
-				System.out.println("Entrez numero colonne receveuse : ");
 				try {
+					System.out.println("Entrez numero colonne receveuse : ");
 					indiceRecev= scan.nextInt()-1;
 					pioche.deplaceDefausseCol(tableau.getPaquetColonneVisible(indiceRecev), itp, tableau.convertIndToEmp(indiceRecev));
 				} catch (DeplacementImpossibleException e) {
@@ -60,8 +60,8 @@ public class PlateauJeu {
 			//choix 3
 			else if (menu.getChoix()==3) {
 				String nomPieux;
-				System.out.println("Entrez nom pieux receveur : ");
 				try {
+					System.out.println("Entrez nom pieux receveur : ");
 					nomPieux = scan.next();
 					pioche.deplaceDefaussePieu(fondation.getPaquetPieux(fondation.convertNomToInd(nomPieux)), itp, fondation.convertNomToEmp(nomPieux));
 				} catch (DeplacementImpossibleException e) {
@@ -79,8 +79,8 @@ public class PlateauJeu {
 			else if (menu.getChoix()==4) {
 				int indiceExp;
 				String nomPieux;
-				System.out.println("Entrez numero colonne expeditrice : ");
 				try {
+				System.out.println("Entrez numero colonne expeditrice : ");
 				indiceExp= scan.nextInt()-1;
 				System.out.println("Entrez nom pieux receveur : ");
 				nomPieux = scan.next();
@@ -101,8 +101,8 @@ public class PlateauJeu {
 			//choix 5
 			else if (menu.getChoix()==5) {
 				int indiceExp, indiceRecev;
-				System.out.println("Entrez numero colonne expeditrice : ");
 				try {
+					System.out.println("Entrez numero colonne expeditrice : ");
 					indiceExp= scan.nextInt()-1;
 					System.out.println("Entrez numero colonne receveuse : ");
 					indiceRecev= scan.nextInt()-1;
@@ -121,8 +121,8 @@ public class PlateauJeu {
 			//choix 6
 			else if (menu.getChoix()==6) {
 				int indiceExp, indiceRecev, nbCarte;
-				System.out.println("Entrez numero colonne expeditrice : ");
 				try {
+					System.out.println("Entrez numero colonne expeditrice : ");
 					indiceExp= scan.nextInt()-1;
 					System.out.println("Entrez numero colonne receveuse : ");
 					indiceRecev= scan.nextInt()-1;
