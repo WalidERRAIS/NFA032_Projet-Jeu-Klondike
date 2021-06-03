@@ -12,20 +12,20 @@ public class TableauKlondike {
 		int j=7;
 		for (int i=0; i<7; i++) {
 			//initialise tableau paquets de cartes cachees 
-			//et affichage de la carte selon visibilite à l'emplacement interface graphique
+			//et affichage de la carte selon visibilite ï¿½ l'emplacement interface graphique
 			tableauCache[i]= new PaquetColonne(p, i);
-			//pas d'affichage à l'emplacement 7 pour paquet cachee indice 0 car paquet vide
+			//pas d'affichage Ã  l'emplacement 7 pour paquet cachee indice 0 car paquet vide
 			if (!tableauCache[i].isEmpty()) {
-				//ajoute autant de carte à l'affichage que de cartes dans paquet cache
+				//ajoute autant de carte Ã  l'affichage que de cartes dans paquet cache
 				for (int k=0; k<tableauCache[i].getNombreCartePaquet(); k++) 
 					itp.ajouterUneCarte(tableauCache[i].getCarteIndice(k), j);
 				
 			}
 			//initialise tableau paquets cartes cachees
-			//et affichage de la carte selon visibilite à l'emplacement interface graphique
+			//et affichage de la carte selon visibilite Ã  l'emplacement interface graphique
 			tableauVisible[i]= new PaquetColonne(p, 1);
 			tableauVisible[i].getTop().rendVisible(); //rend visible cartes dans paquet visible
-			//ajoute autant de carte à l'affichage que de cartes dans paquet
+			//ajoute autant de carte ï¿½ l'affichage que de cartes dans paquet
 			//pour paquet visible configuration initiale nb carte afficher = 1
 			itp.ajouterUneCarte(tableauVisible[i].getTop(), j);
 			j++; //incremente j => emplacement interface graphique
@@ -76,7 +76,7 @@ public class TableauKlondike {
 		else
 			throw new DeplacementImpossibleException();
 	}
-	//retourne vrai si carte paquet colonne peut être ajouté dans paquet pieux
+	//retourne vrai si carte paquet colonne peut Ãªtre ajoutÃ© dans paquet pieux
 	public boolean deplaceColPieu(int indiceExp, PaquetPieux recev) throws DeplacementImpossibleException {
 		//si paquet receveur vide renvoie vrai si la carte de exp = As
 		if (recev.isEmpty() && tableauVisible[indiceExp].getTop().getValeur().equals(Valeur.as))
@@ -102,13 +102,16 @@ public class TableauKlondike {
 				itp.retirerDesCartes(2, convertIndToEmp(indiceExp));
 				itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
 			}
+			//si paquet visible contient carte
 			else if (!tableauVisible[indiceExp].isEmpty()) 
 				itp.retirerDesCartes(1, convertIndToEmp(indiceExp));
-			
 		}
 		else
 			throw new DeplacementImpossibleException();
 	}
+
+	
+	
 	//retourne vrai si la derniere carte de col exp peut etre pose sur col recev
 	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev, int indiceCarte) throws DeplacementImpossibleException {
 		//si paquet receveur vide renvoie vrai si la carte = Roi
@@ -122,7 +125,7 @@ public class TableauKlondike {
 	}
 
 	//retire et ajoute n cartes d'une colonne vers une autre colonne
-	public void deplaceNcarteColCol(int indiceExp, int indiceRecev, int nbCarte, InterfaceKlondike itp) throws DeplacementImpossibleException {
+	public void deplaceNcarteColCol(int indiceExp, int indiceRecev, int nbCarte, InterfaceKlondike itp) throws DeplacementImpossibleException{
 		Carte [] tab= new Carte[nbCarte+1];
 		int j=0;
 		for (int i=nbCarte; i>=0; i--) {

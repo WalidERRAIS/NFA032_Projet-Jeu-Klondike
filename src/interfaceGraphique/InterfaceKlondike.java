@@ -19,7 +19,7 @@ public class InterfaceKlondike{
 	private static final long serialVersionUID = 1L;
 	private InterfaceCarte ic = new InterfaceCarte(7,2);
 	private UnTas[] composant = new UnTas[14];
-	//public Font font;
+//	public Font font;
 	/**
 	 * Affiche la fenêtre graphique avec tous les tas vides.
 	 */
@@ -38,7 +38,7 @@ public class InterfaceKlondike{
 		ic.makeGrid();
 		ic.pack();
 		ic.setVisible(true);
-		//changeFont();
+//		changeFont();
 	}
 	/**
 	 * Retourne true si idx est l'indice d'un pieu (compris entre 3 et 6), false sinon.

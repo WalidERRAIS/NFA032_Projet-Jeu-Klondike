@@ -16,7 +16,11 @@ public class Pioche extends Paquet {
 	public Paquet getDefausse() {
 		return defausse;
 	}
-	//si pioche contient carte deplace carte du haut de la pioche à la defausse
+	//retourne vrai si defausse vide
+	public boolean DefausseEmpty() {
+		return defausse.isEmpty();
+	}
+	//si pioche contient carte deplace carte du haut de la pioche ï¿½ la defausse
 	public void deplaceCartePiocheDefausse(Pioche p, InterfaceKlondike itp) throws PiocheVideException, DeplacementImpossibleException {
 		if (!p.isEmpty()) {
 			p.getTop().rendVisible();
@@ -29,7 +33,7 @@ public class Pioche extends Paquet {
 			throw new PiocheVideException();
 		}
 	}
-	//recycle pioche en deplacant carte du haut de la defausse à la pioche
+	//recycle pioche en deplacant carte du haut de la defausse ï¿½ la pioche
 	public void recyclePioche(Pioche p, InterfaceKlondike itp) throws RecyclageErrorException, DeplacementImpossibleException{
 		int nbCarteDefausse=defausse.getNombreCartePaquet();
 		if (p.isEmpty()) {
@@ -48,13 +52,14 @@ public class Pioche extends Paquet {
 		//si paquet receveur vide renvoie vrai si la carte = as
 		if (recev.isEmpty() && this.defausse.getTop().getValeur().equals(Valeur.as))
 			return true;
-		//si paquet receveur non vide retourne vrai si carte de exp = suivante de recev et même couleur
+		//si paquet receveur non vide retourne vrai si carte de exp = suivante de recev et mÃªme couleur
 		else if (!recev.isEmpty() && recev.getTop().precedeMemeCouleur(this.defausse.getTop()))
 			return true;
 		//si non retourne faux
 		return false;
+
 	}
-	//deplace carte de defausse à pieux
+	//deplace carte de defausse Ã  pieux
 	public void deplaceDefaussePieu(PaquetPieux recev, InterfaceKlondike itp, int emp) throws DeplacementImpossibleException {
 		if (deplaceDefPieu(recev)) {
 			recev.ajoutCarte(this.defausse.removeTop());
@@ -78,7 +83,7 @@ public class Pioche extends Paquet {
 		//si non retourne faux
 		return false;
 	}
-	//deplace carte de defausse à colonne
+	//deplace carte de defausse Ã  colonne
 	public void deplaceDefausseCol(PaquetColonne recev, InterfaceKlondike itp, int emp) throws DeplacementImpossibleException{
 		if (deplaceDefCol(recev)) {
 			recev.ajoutCarte(this.defausse.removeTop());

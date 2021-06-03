@@ -22,21 +22,4 @@ public class PaquetPieux extends Paquet {
 		else 
 			throw new DeplacementImpossibleException();
 	}
-//	//retourne vrai si la carte de pieux exp peut etre pose sur paquet col recev
-//	public boolean deplace(PaquetPieux exp, PaquetColonne recev) throws DeplacementImpossibleException {
-//		//si paquet receveur vide renvoie vrai si la carte = as
-//		if (recev.isEmpty() && exp.getTop().getValeur().equals(Valeur.as))
-//			return true;
-//		//si paquet receveur non vide retourne vrai si carte de exp = suivante de recev et même couleur
-//		else if (!recev.isEmpty() && recev.getTop().precedeMemeCouleur(exp.getTop()))
-//			return true;
-//		//si non retourne faux
-//		return false;
-//	}
-//	public void deplacePieuCol(PaquetPieux exp, PaquetColonne recev) throws DeplacementImpossibleException {
-//		if(deplace(exp, recev))
-//			recev.ajoutCarte(exp.removeTop());
-//		else
-//			throw new IllegalArgumentException();
-//	}
 }

@@ -5,6 +5,27 @@ import java.util.*;
 import gestionError.DeplacementImpossibleException;
 
 public class Paquet {
+	/*
+	 *                         Paquet
+	 *              
+	 *             /           |             \           \
+	 *  PaquetColonne   PaquetDistributeur   PaquetPieux  Pioche
+	 *  
+	 *  Pioche=> 1 attribut pour defausse et pioche paquet herite
+	 *  
+	 *  PaquetColonne=> 2 paquet herite, 1 pour paquet carte visible et 1 pour paquet carte cache
+	 *  TableauKlondike=> modélise le tableau du jeu avec: deux tableaux taille 7 de paquetcolonne
+	 *                    1 tableau pour les paquets de cartes visibles et 1 tableau pour les paquets de cartes cachees
+	 *  
+	 *  Fondation=> modélise la fondation du jeu avec : 1 tableau taille 4 de paquetpieux
+	 *  
+	 *  MenuKlondike=> affiche le menu du jeu avec les différents choix, lit le choix de l'utilisateur
+	 *  
+	 *  PlateauJeu=> modélise le jeu avec : pioche, tableau et fondation
+	 *  
+	 *  TestCarte=> main
+	 */
+	
 	//attribut
 	protected Valeur [] valeur= Valeur.values();
 	protected Couleur [] couleur= Couleur.values();
@@ -38,7 +59,7 @@ public class Paquet {
 		else
 			throw new DeplacementImpossibleException();
 	}
-	//retourne la carte � l'indice i du paquet
+	//retourne la carte à l'indice i du paquet
 	public Carte getCarteIndice(int i) throws DeplacementImpossibleException{
 		if (!this.paquet.isEmpty())
 			return this.paquet.get(i);
