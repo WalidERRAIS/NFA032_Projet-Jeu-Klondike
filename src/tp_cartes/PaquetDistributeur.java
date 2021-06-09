@@ -12,27 +12,27 @@ public class PaquetDistributeur extends Paquet {
 			}
 		}
 	}
-	//mélange paquet = tirage aléatoire n fois
+	//mÃ©lange paquet = tirage alÃ©atoire n fois
 	public void melangePaquet() {
 		int nbAleatoire=tirageAleatoire();
-		//nbTirage nombre de fois que vous voulez mélanger
+		//nbTirage nombre de fois que vous voulez mÃ©langer
 		int nbTirage=1;
 		while (nbTirage!=200) {
-			//ajout à la fin de la carte tiré aléatoirement
+			//ajout Ã  la fin de la carte tirÃ© alÃ©atoirement
 			this.paquet.add(this.paquet.get(nbAleatoire));
 			this.paquet.remove(nbAleatoire);
 			nbAleatoire=tirageAleatoire();
 			nbTirage++;
 		}
 	}
-	//tirage aléatoire
+	//tirage alÃ©atoire
 	private static int tirageAleatoire() {
 		Random random= new Random();
 		int nbAleatoire = random.nextInt(52);
 		return nbAleatoire;
 	}
 	//retire la carte au sommet du paquet distributeur 
-	//removeTop !non redéfini! reutilise celle de la super class
+	//removeTop !non redï¿½fini! reutilise celle de la super class
 	
 	
 	
