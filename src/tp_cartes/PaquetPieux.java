@@ -1,9 +1,5 @@
 package tp_cartes;
 
-import java.util.ArrayList;
-
-import gestionError.DeplacementImpossibleException;
-
 public class PaquetPieux extends Paquet {
 	//constructeur
 	public PaquetPieux() {
@@ -11,7 +7,7 @@ public class PaquetPieux extends Paquet {
 	}
 	//ajoute une carte au sommet du paquet si
 	//meme couleur et valeur suivante
-	public void ajoutCarte(Carte c) throws DeplacementImpossibleException {
+	public void ajoutCarte(Carte c) {
 		//si paquet vide j'ajoute carte que si c'est un As
 		if (this.isEmpty() && c.getValeur().equals(Valeur.as))
 			super.ajoutCarte(c);
@@ -20,6 +16,6 @@ public class PaquetPieux extends Paquet {
 		else if (!this.isEmpty() && this.getTop().precedeMemeCouleur(c))
 			super.ajoutCarte(c);
 		else 
-			throw new DeplacementImpossibleException();
+			throw new IllegalArgumentException("Erreur -> Deplacement Impossible!");
 	}
 }
