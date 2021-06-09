@@ -1,18 +1,17 @@
 package tp_cartes;
 
-import gestionError.*;
-import interfaceGraphique.InterfaceKlondike;
+import interfaceGraphique.*;
 
 public class TableauKlondike {
 	// 1 tableau de paquets de cartes cachees et 1 tableau de paquets de cartes visibles
 	private PaquetColonne[] tableauCache= new PaquetColonne[7];
 	private PaquetColonne[] tableauVisible= new PaquetColonne[7];
 	//configuration initiale du jeu 
-	public TableauKlondike(PaquetDistributeur p, InterfaceKlondike itp) throws DeplacementImpossibleException {
+	public TableauKlondike(PaquetDistributeur p, InterfaceKlondike itp) {
 		int j=7;
 		for (int i=0; i<7; i++) {
 			//initialise tableau paquets de cartes cachees 
-			//et affichage de la carte selon visibilite � l'emplacement interface graphique
+			//et affichage de la carte selon visibilite à l'emplacement interface graphique
 			tableauCache[i]= new PaquetColonne(p, i);
 			//pas d'affichage à l'emplacement 7 pour paquet cachee indice 0 car paquet vide
 			if (!tableauCache[i].isEmpty()) {
@@ -25,12 +24,13 @@ public class TableauKlondike {
 			//et affichage de la carte selon visibilite à l'emplacement interface graphique
 			tableauVisible[i]= new PaquetColonne(p, 1);
 			tableauVisible[i].getTop().rendVisible(); //rend visible cartes dans paquet visible
-			//ajoute autant de carte � l'affichage que de cartes dans paquet
+			//ajoute autant de carte à l'affichage que de cartes dans paquet
 			//pour paquet visible configuration initiale nb carte afficher = 1
 			itp.ajouterUneCarte(tableauVisible[i].getTop(), j);
 			j++; //incremente j => emplacement interface graphique
 		}
 	}
+	
 	public PaquetColonne getPaquetColonneCache(int indicePaquetColonne) {
 		return (tableauCache[indicePaquetColonne]);
 	}
@@ -42,7 +42,7 @@ public class TableauKlondike {
 		return (indiceRecev+7);
 	}
 	//retourne vrai si la carte de col exp peut etre pose sur col recev
-	public boolean deplace(PaquetColonne exp, PaquetColonne recev) throws DeplacementImpossibleException {
+	public boolean deplace(PaquetColonne exp, PaquetColonne recev) {
 		//si paquet receveur vide renvoie vrai si la carte = Roi
 		if (recev.isEmpty() && exp.getTop().getValeur().equals(Valeur.roi))
 			return true;
@@ -54,30 +54,24 @@ public class TableauKlondike {
 	}
 
 	//deplace carte du haut de paquet exp en haut du paquet recev 
-	public void deplaceColCol(int indiceExp, int indiceRecev, InterfaceKlondike itp) throws DeplacementImpossibleException {
-		if (deplace(tableauVisible[indiceExp], tableauVisible[indiceRecev])) {
-			tableauVisible[indiceRecev].ajoutCarte(tableauVisible[indiceExp].removeTop());
-			itp.ajouterUneCarte(tableauVisible[indiceRecev].getTop(), (convertIndToEmp(indiceRecev)));
-			
-			//deux paquets colonnes vides
-			if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty())
-				itp.vider(convertIndToEmp(indiceExp));
-			//paquet visible vide et paquet cache contient carte
-			else if (tableauVisible[indiceExp].isEmpty() && !tableauCache[indiceExp].isEmpty()) {
-				tableauVisible[indiceExp].ajoutCarteVisible((tableauCache[indiceExp].removeTop()));
-				tableauVisible[indiceExp].getTop().rendVisible();
-				itp.retirerDesCartes(2, convertIndToEmp(indiceExp));
-				itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
-
-			}
-			else if (!tableauVisible[indiceExp].isEmpty()) 
-				itp.retirerDesCartes(1, convertIndToEmp(indiceExp));
+	public void deplaceColCol(int indiceExp, int indiceRecev, InterfaceKlondike itp) {
+		tableauVisible[indiceRecev].ajoutCarte(tableauVisible[indiceExp].removeTop());
+		itp.ajouterUneCarte(tableauVisible[indiceRecev].getTop(), (convertIndToEmp(indiceRecev)));
+		//deux paquets colonnes vides
+		if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty())
+			itp.vider(convertIndToEmp(indiceExp));
+		//paquet visible vide et paquet cache contient carte
+		else if (tableauVisible[indiceExp].isEmpty() && !tableauCache[indiceExp].isEmpty()) {
+			tableauVisible[indiceExp].ajoutCarteVisible((tableauCache[indiceExp].removeTop()));
+			tableauVisible[indiceExp].getTop().rendVisible();
+			itp.retirerDesCartes(2, convertIndToEmp(indiceExp));
+			itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
 		}
-		else
-			throw new DeplacementImpossibleException();
+		else if (!tableauVisible[indiceExp].isEmpty()) 
+			itp.retirerDesCartes(1, convertIndToEmp(indiceExp));
 	}
 	//retourne vrai si carte paquet colonne peut être ajouté dans paquet pieux
-	public boolean deplaceColPieu(int indiceExp, PaquetPieux recev) throws DeplacementImpossibleException {
+	public boolean deplaceColPieu(int indiceExp, PaquetPieux recev) {
 		//si paquet receveur vide renvoie vrai si la carte de exp = As
 		if (recev.isEmpty() && tableauVisible[indiceExp].getTop().getValeur().equals(Valeur.as))
 			return true;
@@ -88,32 +82,26 @@ public class TableauKlondike {
 		return false;
 	}
 	//methode transfert carte de colonne vers pieu
-	public void ColPieu(int indiceExp, PaquetPieux recev, InterfaceKlondike itp, int idEmpPieux) throws DeplacementImpossibleException {
-		if (deplaceColPieu(indiceExp, recev)) {
-			recev.ajoutCarte(tableauVisible[indiceExp].removeTop());
-			itp.ajouterUneCarte(recev.getTop(), idEmpPieux);
-			//deux paquets colonnes vides
-			if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty()) 
-				itp.vider(convertIndToEmp(indiceExp));
-			//paquet visible vide et paquet cache contient carte
-			else if (tableauVisible[indiceExp].isEmpty() && !tableauCache[indiceExp].isEmpty()) {
-				tableauVisible[indiceExp].ajoutCarteVisible((tableauCache[indiceExp].removeTop()));
-				tableauVisible[indiceExp].getTop().rendVisible();
-				itp.retirerDesCartes(2, convertIndToEmp(indiceExp));
-				itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
-			}
-			//si paquet visible contient carte
-			else if (!tableauVisible[indiceExp].isEmpty()) 
-				itp.retirerDesCartes(1, convertIndToEmp(indiceExp));
+	public void ColPieu(int indiceExp, PaquetPieux recev, InterfaceKlondike itp, int idEmpPieux) {
+		recev.ajoutCarte(tableauVisible[indiceExp].removeTop());
+		itp.ajouterUneCarte(recev.getTop(), idEmpPieux);
+		//deux paquets colonnes vides
+		if (tableauVisible[indiceExp].isEmpty() && tableauCache[indiceExp].isEmpty()) 
+			itp.vider(convertIndToEmp(indiceExp));
+		//paquet visible vide et paquet cache contient carte
+		else if (tableauVisible[indiceExp].isEmpty() && !tableauCache[indiceExp].isEmpty()) {
+			tableauVisible[indiceExp].ajoutCarteVisible((tableauCache[indiceExp].removeTop()));
+			tableauVisible[indiceExp].getTop().rendVisible();
+			itp.retirerDesCartes(2, convertIndToEmp(indiceExp));
+			itp.ajouterUneCarte(tableauVisible[indiceExp].getTop(), convertIndToEmp(indiceExp));
 		}
-		else
-			throw new DeplacementImpossibleException();
+		//si paquet visible contient carte
+		else if (!tableauVisible[indiceExp].isEmpty()) 
+			itp.retirerDesCartes(1, convertIndToEmp(indiceExp));
 	}
-
-	
 	
 	//retourne vrai si la derniere carte de col exp peut etre pose sur col recev
-	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev, int indiceCarte) throws DeplacementImpossibleException {
+	public boolean deplacePlusieurs(PaquetColonne exp, PaquetColonne recev, int indiceCarte) {
 		//si paquet receveur vide renvoie vrai si la carte = Roi
 		if (recev.isEmpty() && exp.getCarteIndice(indiceCarte).getValeur().equals(Valeur.roi))
 			return true;
@@ -125,7 +113,8 @@ public class TableauKlondike {
 	}
 
 	//retire et ajoute n cartes d'une colonne vers une autre colonne
-	public void deplaceNcarteColCol(int indiceExp, int indiceRecev, int nbCarte, InterfaceKlondike itp) throws DeplacementImpossibleException{
+	public void deplaceNcarteColCol(int indiceExp, int indiceRecev, int nbCarte, InterfaceKlondike itp) {
+		//nbcarte +1 parce que -1 a été fait dans plateau jeu
 		Carte [] tab= new Carte[nbCarte+1];
 		int j=0;
 		for (int i=nbCarte; i>=0; i--) {
@@ -136,7 +125,7 @@ public class TableauKlondike {
 				j++;
 			}
 			else {
-				throw new DeplacementImpossibleException();
+				throw new IllegalArgumentException("Erreur -> Deplacement Impossible!");
 			}
 		}
 		itp.ajouterLesCartes(tab, convertIndToEmp(indiceRecev));
