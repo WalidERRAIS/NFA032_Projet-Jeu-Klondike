@@ -26,7 +26,7 @@ public class MenuKlondike {
 		else
 			return false;
 	}
-	//m�thode retourne choix utilisateur si compris entre 1 et 10
+	//méthode retourne choix utilisateur si compris entre 1 et 10
 	public int lireChoixUtilisateur () {
 		Scanner scan= new Scanner(System.in);
 		boolean saisi= false;
