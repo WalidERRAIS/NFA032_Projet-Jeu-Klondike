@@ -2,8 +2,6 @@ package tp_cartes;
 
 import java.util.*;
 
-import gestionError.DeplacementImpossibleException;
-
 public class Paquet {
 	/*
 	 *                         Paquet
@@ -35,36 +33,36 @@ public class Paquet {
 		this.paquet= new ArrayList<Carte>();
 	}
 	//constructeur paquet avec n cartes du paquet distrib
-	public Paquet(PaquetDistributeur p, int n) throws DeplacementImpossibleException {
+	public Paquet(PaquetDistributeur p, int n) {
 		this.paquet= new ArrayList<Carte>();
 		for (int i=0; i<n; i++) {
 			this.paquet.add(0, p.removeTop());
 		}
 	}
 	//ajoute une carte au sommet du paquet
-	public void ajoutCarte(Carte c) throws DeplacementImpossibleException {
+	public void ajoutCarte(Carte c) {
 		this.paquet.add(0, c);
 	}
 	//retire la carte au sommet du paquet
-	public Carte removeTop() throws DeplacementImpossibleException{
+	public Carte removeTop() {
 		if (!this.paquet.isEmpty())  
 			return this.paquet.remove(0);
 		else
-			throw new DeplacementImpossibleException();
+			throw new IllegalArgumentException("Erreur -> Deplacement Impossible!");
 	}
 	//retourne la carte au sommet du paquet
-	public Carte getTop() throws DeplacementImpossibleException {
+	public Carte getTop() {
 		if (!this.paquet.isEmpty())
 			return this.paquet.get(0);
 		else
-			throw new DeplacementImpossibleException();
+			throw new IllegalArgumentException("Erreur -> Deplacement Impossible!");
 	}
 	//retourne la carte à l'indice i du paquet
-	public Carte getCarteIndice(int i) throws DeplacementImpossibleException{
+	public Carte getCarteIndice(int i) {
 		if (!this.paquet.isEmpty())
 			return this.paquet.get(i);
 		else
-			throw new DeplacementImpossibleException();
+			throw new IllegalArgumentException("Erreur -> Deplacement Impossible!");
 	}
 	//retourne le nombre de carte
 	public int getNombreCartePaquet() {
@@ -77,18 +75,18 @@ public class Paquet {
 	public Carte getLastCarte() {
 		return this.paquet.get(getNombreCartePaquet()-1);
 	}
-	public Carte removeLastCarte() throws DeplacementImpossibleException{
+	public Carte removeLastCarte() {
 		if (!this.paquet.isEmpty())  
 			return this.paquet.remove(getNombreCartePaquet()-1);
 		else
-			throw new DeplacementImpossibleException();
+			throw new IllegalArgumentException("Erreur -> Deplacement Impossible!");
 	}
 	//retire carte a indice i
-	public Carte removeCarteInd(int i) throws DeplacementImpossibleException{
+	public Carte removeCarteInd(int i) {
 		if (!this.paquet.isEmpty())  
 			return this.paquet.remove(i);
 		else
-			throw new DeplacementImpossibleException();
+			throw new IllegalArgumentException("Erreur -> Deplacement Impossible!");
 	}
 	//retourne vrai si la carte de paquet exp peut etre pose sur paquet recev
 	//retourne vrai pour paquet sans ordre
